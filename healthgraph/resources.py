@@ -9,7 +9,10 @@ and uploading Fitness Activity and Health Measurements information.
 """
 
 import urllib
-import urlparse
+try:
+    import urlparse  # Python 2
+except:
+    import urllib.urlparse as urlparse  # Python 3
 import inspect
 from collections import namedtuple, MutableMapping
 import settings

@@ -88,7 +88,7 @@ class APIobject(object):
         if session is not None:
             self._session = session
         else:
-            self._session = sessionmgr.get_session()
+            self._session = healthgraph.sessionmgr.get_session()
             
     def _get_resource_data(self, resource, content_type, params=None):
         resp = self._session.get(resource, content_type, params)
@@ -224,7 +224,7 @@ class ResourceFeedIter(BaseResource):
                  descending=True,
                  session=None):
         func_params = locals()
-        params = {'pageSize': settings.DEFAULT_PAGE_SIZE,}
+        params = {'pageSize': healthgraph.settings.DEFAULT_PAGE_SIZE,}
         for func_key, api_key in (('date_min', 'noEarlierThan'),
                                   ('date_max', 'noLaterThan'),
                                   ('mod_date_min', 'modifiedNoEarlierThan'),
@@ -287,8 +287,8 @@ class ResourceFeedIter(BaseResource):
         link = self._prop_dict.get('next')
         if link is not None:
             size = self.count()
-            last_page = size / settings.DEFAULT_PAGE_SIZE
-            if size % settings.DEFAULT_PAGE_SIZE == 0:
+            last_page = size / healthgraph.settings.DEFAULT_PAGE_SIZE
+            if size % healthgraph.settings.DEFAULT_PAGE_SIZE == 0:
                 last_page -= 1
             if last_page > 0:
                 self._resource, qs = urllib.splitquery(link.resource)
@@ -310,7 +310,7 @@ class FeedItem(ResourceItem):
 
 class User(Resource):
     
-    _content_type = content_types.USER
+    _content_type = healthgraph.content_types.USER
     _prop_defs = {'userID': None,
                   'profile': PropResourceLink('Profile'),
                   'settings': PropResourceLink('Settings'),
@@ -328,7 +328,8 @@ class User(Resource):
     _prop_main = ('userID',)
     
     def __init__(self, session=None):
-        super(User, self).__init__(settings.USER_RESOURCE, session=session)
+        super(User, self).__init__(
+            healthgraph.settings.USER_RESOURCE, session=session)
     
     def get_profile(self):
         return self._get_linked_resource(self._prop_dict['profile'])
@@ -385,7 +386,7 @@ class User(Resource):
 
 class Profile(Resource):
     
-    _content_type = content_types.PROFILE
+    _content_type = healthgraph.content_types.PROFILE
     _prop_defs = {'name': None,
                   'location': None,
                   'athlete_type': None,
@@ -406,7 +407,7 @@ class Profile(Resource):
 
 class Settings(Resource):
     
-    _content_type = content_types.SETTINGS
+    _content_type = healthgraph.content_types.SETTINGS
     _prop_defs = {'facebook_connected': parse_bool,
                   'twitter_connected': parse_bool,
                   'foursquare_connected': parse_bool,
@@ -445,7 +446,7 @@ class Settings(Resource):
 
 class PersonalRecords(Resource):
     
-    _content_type = content_types.PERSONAL_RECORDS
+    _content_type = healthgraph.content_types.PERSONAL_RECORDS
 
     def __init__(self, resource, session=None):
         super(PersonalRecords, self).__init__(resource, session=session)
@@ -500,7 +501,7 @@ class PersonalRecords(Resource):
 
 class FitnessActivity(Resource):
     
-    _content_type = content_types.FITNESS_ACTIVITY
+    _content_type = healthgraph.content_types.FITNESS_ACTIVITY
     _prop_defs = {'uri': PropResourceLink('FitnessActivity'),
                   'userID': None,
                   'type': None,
@@ -558,7 +559,7 @@ class FitnessActivity(Resource):
 
 class FitnessActivitySummary(Resource):
     
-    _content_type = content_types.FITNESS_ACTIVITY_SUMMARY
+    _content_type = healthgraph.content_types.FITNESS_ACTIVITY_SUMMARY
     _prop_defs = {'uri': PropResourceLink('FitnessActivity'),
                   'userID': None,
                   'type': None,
@@ -609,7 +610,7 @@ class FitnessActivityFeedItem(FeedItem):
 
 class FitnessActivityIter(ResourceFeedIter):
     
-    _content_type = content_types.FITNESS_ACTIVITY_FEED
+    _content_type = healthgraph.content_types.FITNESS_ACTIVITY_FEED
     _item_cls = FitnessActivityFeedItem
     
     def __init__(self, resource, 
@@ -638,7 +639,7 @@ class StrengthActivityFeedItem(FeedItem):
 
 class StrengthActivityIter(ResourceFeedIter):
     
-    _content_type = content_types.STRENGTH_ACTIVITY_FEED
+    _content_type = healthgraph.content_types.STRENGTH_ACTIVITY_FEED
     _item_cls = StrengthActivityFeedItem
     
     def __init__(self, resource, 
@@ -673,7 +674,7 @@ class WeightMeasurementFeedItem(FeedItem):
 
 class WeightMeasurementIter(ResourceFeedIter):
 
-    _content_type = content_types.WEIGHT_MEASUREMENT_FEED
+    _content_type = healthgraph.content_types.WEIGHT_MEASUREMENT_FEED
     _item_cls = WeightMeasurementFeedItem
 
     def __init__(self, resource, 
@@ -713,7 +714,7 @@ class SleepMeasurementFeedItem(FeedItem):
 
 class SleepMeasurementIter(ResourceFeedIter):
     
-    _content_type = content_types.SLEEP_MEASUREMENT_FEED
+    _content_type = healthgraph.content_types.SLEEP_MEASUREMENT_FEED
     _item_cls = SleepMeasurementFeedItem
     
     def __init__(self, resource, 
@@ -732,7 +733,7 @@ class SleepMeasurementIter(ResourceFeedIter):
 
 class CommentThread(Resource):
     
-    _content_type = content_types.COMMENT_THREAD
+    _content_type = healthgraph.content_types.COMMENT_THREAD
     _prop_defs = {'uri': None,
                   'userID': None,
                   'comments': ArrayComments,

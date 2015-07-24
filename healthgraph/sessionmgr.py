@@ -8,8 +8,8 @@ This module implements sessions for making REST requests to the Health Graph API
 """
 
 import requests
-import exceptions
-import settings
+from . import exceptions
+from . import settings
 
 
 __author__ = "Ali Onur Uyar"

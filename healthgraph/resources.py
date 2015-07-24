@@ -15,9 +15,9 @@ except:
     import urllib.parse as urlparse  # Python 3
 import inspect
 from collections import namedtuple, MutableMapping
-import settings
+from . import settings
 import content_types
-import sessionmgr
+from . import sessionmgr
 from parser import (parse_resource_dict, 
                     parse_bool, 
                     parse_distance, parse_distance_km, 

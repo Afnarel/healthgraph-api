@@ -15,14 +15,14 @@ except:
     import urllib.parse as urlparse  # Python 3
 import inspect
 from collections import namedtuple, MutableMapping
-from . import settings
-import content_types
-from . import sessionmgr
-from parser import (parse_resource_dict, 
-                    parse_bool, 
-                    parse_distance, parse_distance_km, 
-                    parse_date, parse_datetime, 
-                    parse_date_param)
+import healthgraph.settings
+import healthgraph.content_types
+import healthgraph.sessionmgr
+from .parser import (parse_resource_dict, 
+                     parse_bool, 
+                     parse_distance, parse_distance_km, 
+                     parse_date, parse_datetime, 
+                     parse_date_param)
 
 
 __author__ = "Ali Onur Uyar"

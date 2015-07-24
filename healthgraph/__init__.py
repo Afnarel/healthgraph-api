@@ -10,7 +10,7 @@ client secret for use with the Health Graph API.
 
 """
 
-from . import content_types
+from healthgraph import content_types
 from authmgr import AuthManager
 from sessionmgr import Session, NullSession, init_session, get_session
 from resources import (PersonalRecordType, ResourceLink,

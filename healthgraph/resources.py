@@ -12,7 +12,7 @@ import urllib
 try:
     import urlparse  # Python 2
 except:
-    import urllib.urlparse as urlparse  # Python 3
+    import urllib.parse as urlparse  # Python 3
 import inspect
 from collections import namedtuple, MutableMapping
 import settings
